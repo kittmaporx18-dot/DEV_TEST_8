@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'หน้ารวมงานกลุ่ม DEV_TEST_1'),
+      home: const MyHomePage(title: 'DEV_TEST_1'),
     );
   }
 }
