@@ -1,0 +1,36 @@
+name: Android CI/CD
+
+on:
+  push:
+    branches: [ "main", "master" ] # นี่คือจุดที่หายไปค่ะ ต้องบอก GitHub ว่าให้ทำงานเมื่อมีการ Push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.38.5' # ใช้เวอร์ชันเดียวกับในเครื่องคุณ
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build APK
+      run: flutter build apk --release # คำสั่งบิลด์แอปจริง
+
+    # ขั้นตอนสำคัญ: สั่งให้ GitHub เก็บไฟล์ไว้ให้เราโหลด (Upload Artifact)
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: my-app-apk
+        path: build/app/outputs/flutter-apk/app-release.apk
